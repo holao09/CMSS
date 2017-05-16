@@ -1,1 +1,31 @@
- 
+Build CMSS
+-Prepare Cygwin with installed gcc, g++, make, log4cxx, apr-1, aprutils-1
+-Import archive file CMSS-src.zip to Eclipse workspace.
+
+Configure CMSS
+-Server
+	+ Server.conf : Configure server IP, port, max clients
+		Example : IP_ADDR 127.0.0.1
+				  PORT 3456
+				  MAXCLIENTS 30
+	+ userpass: Archive user and sha256 of password with format <user>:<hashpass>
+		Example:
+				#this is comments
+				#user:pass
+				admin:8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92
+				root:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+				shell:afd63d45baadf7eaf2e9b861054f7b435ae5200d46bf4e145468dc38d1e110d7
+				#The end
+-Client
+	+ Test.conf : Configure server IP and port client will be connect to.
+	
+-Other 
+	+ Log4cxxConfig.cfg: Configure for log4cxx. Refer log4cxx manual.
+	
+How to run CMSS:
+- Extract CMSS-exe.zip
+- Server : Open Server folder extracted from zip file. Click on server.exe to run.
+- Client : Open Client folder extracted from zip file. Click on client.exe to run.
+- Other Client: Copy client.exe and all dll file to other location. Click on client.exe to run.
+All data on data folder will be sync between clients.
+
