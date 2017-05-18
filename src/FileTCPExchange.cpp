@@ -312,7 +312,7 @@ int FileTCPExchange::SendFile(char * filename, int sock) {
 		memset(Block.data, 0, BUF_SIZE);
 		Block.datasize = fread(Block.data, 1, BUF_SIZE, fp);
 		printf("datasize = %d\n", Block.datasize);
-		recv(sock, &res_msg, sizeof(RES_MSG), MSG_WAITALL);
+		recv(sock, &res_msg, sizeof(RES_MSG), 0);
 		//write(sock,&Block,sizeof(Block));
 		send(sock, &Block, sizeof(Block), MSG_WAITALL);
 	}
@@ -356,11 +356,11 @@ int FileTCPExchange::SendFileList(file_hashing_t * filelist, int filelistsize, i
 
 int FileTCPExchange::RecvFileList(file_hashing_t * filelist, int sock) {
 	char msg_N[10];
-	recv(sock, msg_N, sizeof(msg_N), MSG_WAITALL);
+	recv(sock, msg_N, sizeof(msg_N), 0);
 	send(sock, RES_MSG, sizeof(RES_MSG), MSG_WAITALL);
 	int N = atoi(msg_N);
 	for (int i = 0; i < N; i++) {
-		recv(sock, &filelist[i], sizeof(file_hashing_t), MSG_WAITALL);
+		recv(sock, &filelist[i], sizeof(file_hashing_t), 0);
 		send(sock, RES_MSG, sizeof(RES_MSG), MSG_WAITALL);
 	}
 	return (0);
@@ -387,7 +387,7 @@ int FileTCPExchange::RecvFile(char * filename, int sock) {
 	while (Block.datasize == BUF_SIZE) {
 		memset(Block.data, 0, BUF_SIZE);
 		write(sock, msg, sizeof(RES_MSG));
-		recv(sock, &Block, sizeof(TCPHandler::block_t), MSG_WAITALL);
+		recv(sock, &Block, sizeof(TCPHandler::block_t), 0);
 		fwrite(Block.data, Block.datasize, 1, fp);
 	}
 	fclose(fp);
